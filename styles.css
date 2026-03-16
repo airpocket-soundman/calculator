@@ -22,6 +22,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
+  overflow: hidden;
 }
 
 button,
@@ -37,7 +38,8 @@ button {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 16px 24px;
+  overflow: hidden;
 }
 
 .calculator {
@@ -47,7 +49,7 @@ button {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
-  padding: 22px;
+  padding: 20px 22px 18px;
 }
 
 .topbar,
@@ -84,8 +86,8 @@ h1 {
 }
 
 .display-panel {
-  margin-top: 24px;
-  padding: 17px;
+  margin-top: 18px;
+  padding: 15px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.06);
 }
@@ -122,11 +124,11 @@ h1 {
 }
 
 .expression-visual {
-  min-height: 3.15rem;
-  margin-top: 14px;
+  min-height: 2.95rem;
+  margin-top: 12px;
   color: var(--text);
   font-size: clamp(1.72rem, 3.8vw, 2.48rem);
-  line-height: 1.25;
+  line-height: 1.15;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
   word-break: break-word;
@@ -155,8 +157,8 @@ h1 {
 }
 
 .preview {
-  min-height: 1.5em;
-  margin: 8px 0 0;
+  min-height: 1.35em;
+  margin: 6px 0 0;
   color: var(--muted);
   overflow-wrap: anywhere;
 }
@@ -170,7 +172,7 @@ h1 {
 }
 
 .keypad {
-  margin-top: 20px;
+  margin-top: 16px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 9px;
@@ -179,7 +181,7 @@ h1 {
 .key {
   position: relative;
   overflow: hidden;
-  min-height: 55px;
+  min-height: 52px;
   border: 0;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.08);
@@ -251,7 +253,7 @@ h1 {
 
 .key-tall {
   grid-row: span 2;
-  min-height: 119px;
+  min-height: 113px;
   background: linear-gradient(180deg, #f6c65b, #f28c36);
   color: #2c1700;
   font-size: 1.14rem;
@@ -282,24 +284,24 @@ h1 {
 
 @media (max-width: 640px) {
   .app-shell {
-    padding: 12px;
+    padding: 10px 12px;
   }
 
   .calculator {
-    padding: 15px;
+    padding: 13px 15px 12px;
     border-radius: 20px;
   }
 
   .keypad {
-    gap: 8px;
+    gap: 7px;
   }
 
   .key {
-    min-height: 49px;
+    min-height: 46px;
     border-radius: 16px;
   }
 
   .key-tall {
-    min-height: 106px;
+    min-height: 98px;
   }
 }
