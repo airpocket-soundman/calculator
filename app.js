@@ -397,7 +397,42 @@
     element.textContent = `MEM ${formatNumber(state.memory)}`;
   }
 
-  function updatePreview(input, preview) {
+  function escapeHtml(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function updateExpressionVisual(input, visual) {
+    const value = input.value;
+    const start = input.selectionStart ?? value.length;
+    const end = input.selectionEnd ?? start;
+
+    if (!value) {
+      visual.classList.add("is-empty");
+      visual.innerHTML = '<span class="caret-marker"></span>';
+      return;
+    }
+
+    visual.classList.remove("is-empty");
+    if (start !== end) {
+      const before = escapeHtml(value.slice(0, start));
+      const selected = escapeHtml(value.slice(start, end));
+      const after = escapeHtml(value.slice(end));
+      visual.innerHTML = `${before}<mark class="selection-marker">${selected}</mark><span class="caret-marker"></span>${after}`;
+      return;
+    }
+
+    const before = escapeHtml(value.slice(0, start));
+    const after = escapeHtml(value.slice(start));
+    visual.innerHTML = `${before}<span class="caret-marker"></span>${after}`;
+  }
+
+  function updatePreview(input, preview, visual) {
+    updateExpressionVisual(input, visual);
     const expression = input.value.trim();
     if (!expression) {
       preview.textContent = "Ready";
@@ -415,13 +450,14 @@
     }
   }
 
-  function performEvaluation(input, preview) {
+  function performEvaluation(input, preview, visual) {
     const result = evaluateExpression(input.value, state);
     state.ans = result;
     input.value = formatNumber(result);
     input.setSelectionRange(input.value.length, input.value.length);
     preview.textContent = `= ${input.value}`;
     preview.dataset.state = "ok";
+    updateExpressionVisual(input, visual);
   }
 
   function registerServiceWorker() {
@@ -451,6 +487,7 @@
   function initApp() {
     const input = document.getElementById("expression");
     const preview = document.getElementById("preview-message");
+    const visual = document.getElementById("expression-visual");
     const angleIndicator = document.getElementById("angle-mode");
     const memoryIndicator = document.getElementById("memory-indicator");
     const installButton = document.getElementById("install-button");
@@ -468,23 +505,26 @@
 
     updateAngleButton(angleButton, angleIndicator);
     updateMemoryIndicator(memoryIndicator);
-    updatePreview(input, preview);
+    updatePreview(input, preview, visual);
     initInstallPrompt(installButton);
 
-    input.addEventListener("input", () => updatePreview(input, preview));
+    input.addEventListener("input", () => updatePreview(input, preview, visual));
+    input.addEventListener("click", () => updateExpressionVisual(input, visual));
+    input.addEventListener("keyup", () => updateExpressionVisual(input, visual));
+    input.addEventListener("select", () => updateExpressionVisual(input, visual));
 
     input.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
         try {
-          performEvaluation(input, preview);
+          performEvaluation(input, preview, visual);
         } catch (error) {
           preview.textContent = error.message;
           preview.dataset.state = "error";
         }
       } else if (event.key === "Escape") {
         input.value = "";
-        updatePreview(input, preview);
+        updatePreview(input, preview, visual);
       }
     });
 
@@ -506,7 +546,7 @@
         switch (action) {
           case "clear-all":
             input.value = "";
-            updatePreview(input, preview);
+            updatePreview(input, preview, visual);
             input.focus();
             break;
           case "backspace": {
@@ -536,22 +576,24 @@
           case "move-left": {
             const next = Math.max((input.selectionStart || 0) - 1, 0);
             input.setSelectionRange(next, next);
+            updateExpressionVisual(input, visual);
             input.focus();
             break;
           }
           case "move-right": {
             const next = Math.min((input.selectionEnd || 0) + 1, input.value.length);
             input.setSelectionRange(next, next);
+            updateExpressionVisual(input, visual);
             input.focus();
             break;
           }
           case "toggle-angle":
             state.angleMode = state.angleMode === "DEG" ? "RAD" : "DEG";
             updateAngleButton(angleButton, angleIndicator);
-            updatePreview(input, preview);
+            updatePreview(input, preview, visual);
             break;
           case "evaluate":
-            performEvaluation(input, preview);
+            performEvaluation(input, preview, visual);
             break;
           case "toggle-sign":
             toggleSignInInput(input);
@@ -577,7 +619,7 @@
             state.memory += value;
             state.ans = value;
             updateMemoryIndicator(memoryIndicator);
-            updatePreview(input, preview);
+            updatePreview(input, preview, visual);
             break;
           }
           case "memory-subtract": {
@@ -585,7 +627,7 @@
             state.memory -= value;
             state.ans = value;
             updateMemoryIndicator(memoryIndicator);
-            updatePreview(input, preview);
+            updatePreview(input, preview, visual);
             break;
           }
           default:

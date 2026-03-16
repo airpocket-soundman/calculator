@@ -29,6 +29,10 @@ input {
   font: inherit;
 }
 
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .app-shell {
   min-height: 100vh;
   display: grid;
@@ -68,6 +72,8 @@ h1 {
 }
 
 .install-button {
+  position: relative;
+  overflow: hidden;
   border: 0;
   border-radius: 999px;
   padding: 10px 16px;
@@ -101,13 +107,51 @@ h1 {
 
 .expression-input {
   width: 100%;
-  margin-top: 14px;
+  margin-top: 8px;
   border: 0;
   background: transparent;
+  color: transparent;
+  caret-color: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  outline: none;
+  position: absolute;
+  inset: auto;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.expression-visual {
+  min-height: 3.3rem;
+  margin-top: 14px;
   color: var(--text);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   line-height: 1.25;
-  outline: none;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.expression-visual.is-empty::before {
+  content: "0";
+  color: rgba(238, 246, 255, 0.42);
+}
+
+.caret-marker {
+  display: inline-block;
+  width: 2px;
+  min-height: 1.05em;
+  margin: 0 1px;
+  vertical-align: -0.12em;
+  background: var(--accent);
+  border-radius: 999px;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+.selection-marker {
+  background: rgba(255, 179, 71, 0.24);
+  color: var(--text);
+  border-radius: 6px;
 }
 
 .preview {
@@ -133,6 +177,8 @@ h1 {
 }
 
 .key {
+  position: relative;
+  overflow: hidden;
   min-height: 58px;
   border: 0;
   border-radius: 18px;
@@ -146,6 +192,29 @@ h1 {
 .key:focus-visible {
   transform: translateY(-1px);
   background: rgba(255, 255, 255, 0.14);
+}
+
+.key::after,
+.install-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0);
+  opacity: 0;
+  transition: opacity 120ms ease, background 120ms ease;
+  pointer-events: none;
+}
+
+.key:active::after,
+.install-button:active::after {
+  background: rgba(255, 255, 255, 0.22);
+  opacity: 1;
+}
+
+.key:active,
+.install-button:active {
+  transform: translateY(1px) scale(0.99);
 }
 
 .key-muted {
@@ -164,6 +233,16 @@ h1 {
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: #1e1a14;
   font-weight: 700;
+}
+
+.key-accent:hover,
+.key-accent:focus-visible {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
+.key-accent:active {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--text);
 }
 
 .key-wide {
@@ -188,6 +267,17 @@ h1 {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.15;
+  }
 }
 
 @media (max-width: 640px) {
