@@ -362,7 +362,9 @@
     const caret = start + text.length;
     input.setSelectionRange(caret, caret);
     input.dispatchEvent(new Event("input", { bubbles: true }));
-    input.focus();
+    if (!state.touchLikeDevice) {
+      input.focus();
+    }
   }
 
   function toggleSignInInput(input) {
@@ -385,7 +387,9 @@
       input.setSelectionRange(bounds.start + 2, bounds.start + 2 + segment.length);
     }
     input.dispatchEvent(new Event("input", { bubbles: true }));
-    input.focus();
+    if (!state.touchLikeDevice) {
+      input.focus();
+    }
   }
 
   function updateAngleButton(button, indicator) {
@@ -577,7 +581,9 @@
           case "clear-all":
             input.value = "";
             updatePreview(input, preview, visual);
-            input.focus();
+            if (!state.touchLikeDevice) {
+              input.focus();
+            }
             break;
           case "backspace": {
             const start = input.selectionStart || 0;
@@ -588,7 +594,9 @@
               input.setRangeText("", start - 1, start, "start");
             }
             input.dispatchEvent(new Event("input", { bubbles: true }));
-            input.focus();
+            if (!state.touchLikeDevice) {
+              input.focus();
+            }
             break;
           }
           case "delete": {
@@ -600,21 +608,27 @@
               input.setRangeText("", start, start + 1, "start");
             }
             input.dispatchEvent(new Event("input", { bubbles: true }));
-            input.focus();
+            if (!state.touchLikeDevice) {
+              input.focus();
+            }
             break;
           }
           case "move-left": {
             const next = Math.max((input.selectionStart || 0) - 1, 0);
             input.setSelectionRange(next, next);
             updateExpressionVisual(input, visual);
-            input.focus();
+            if (!state.touchLikeDevice) {
+              input.focus();
+            }
             break;
           }
           case "move-right": {
             const next = Math.min((input.selectionEnd || 0) + 1, input.value.length);
             input.setSelectionRange(next, next);
             updateExpressionVisual(input, visual);
-            input.focus();
+            if (!state.touchLikeDevice) {
+              input.focus();
+            }
             break;
           }
           case "toggle-angle":
