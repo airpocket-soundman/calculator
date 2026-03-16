@@ -38,7 +38,7 @@ button {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 16px 24px;
+  padding: 8px;
   overflow: hidden;
 }
 
@@ -50,7 +50,7 @@ button {
 }
 
 .calculator {
-  width: min(95%, 494px);
+  width: min(100vw - 16px, 560px);
   background: var(--panel);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius);
@@ -293,7 +293,7 @@ h1 {
 
 @media (max-width: 640px) {
   .app-shell {
-    padding: 10px 12px;
+    padding: 6px;
   }
 
   .calculator {
