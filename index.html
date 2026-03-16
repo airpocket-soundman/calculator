@@ -13,86 +13,88 @@
 </head>
 <body>
   <main class="app-shell">
-    <section class="calculator" aria-label="関数電卓">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">PWA Scientific Calculator</p>
-          <h1>Calculator</h1>
-        </div>
-        <button id="install-button" class="install-button" type="button" hidden>Install</button>
-      </header>
+    <div id="calculator-fit" class="calculator-fit">
+      <section class="calculator" aria-label="関数電卓">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">PWA Scientific Calculator</p>
+            <h1>Calculator</h1>
+          </div>
+          <button id="install-button" class="install-button" type="button" hidden>Install</button>
+        </header>
 
-      <section class="display-panel" aria-label="表示エリア">
-        <div class="status-row">
-          <span id="angle-mode" class="chip">DEG</span>
-          <span id="memory-indicator" class="chip chip-muted">MEM 0</span>
-        </div>
-        <label class="sr-only" for="expression">式入力</label>
-        <div id="expression-visual" class="expression-visual" aria-hidden="true"></div>
-        <input id="expression" class="expression-input" type="text" inputmode="none" autocomplete="off" spellcheck="false" aria-describedby="preview-message">
-        <p id="preview-message" class="preview">Ready</p>
+        <section class="display-panel" aria-label="表示エリア">
+          <div class="status-row">
+            <span id="angle-mode" class="chip">DEG</span>
+            <span id="memory-indicator" class="chip chip-muted">MEM 0</span>
+          </div>
+          <label class="sr-only" for="expression">式入力</label>
+          <div id="expression-visual" class="expression-visual" aria-hidden="true"></div>
+          <input id="expression" class="expression-input" type="text" inputmode="none" autocomplete="off" spellcheck="false" aria-describedby="preview-message">
+          <p id="preview-message" class="preview">Ready</p>
+        </section>
+
+        <section class="keypad" aria-label="キー操作">
+          <button type="button" class="key key-muted" data-action="clear-all">AC</button>
+          <button type="button" class="key key-muted" data-action="backspace">BS</button>
+          <button type="button" class="key key-muted" data-action="delete">DEL</button>
+          <button type="button" class="key key-muted" data-action="move-left">◀</button>
+          <button type="button" class="key key-muted" data-action="move-right">▶</button>
+
+          <button type="button" class="key key-muted" data-action="memory-clear">MC</button>
+          <button type="button" class="key key-muted" data-action="memory-recall">MR</button>
+          <button type="button" class="key key-muted" data-action="memory-add">M+</button>
+          <button type="button" class="key key-muted" data-action="memory-subtract">M-</button>
+          <button type="button" class="key key-accent" data-action="toggle-angle">DEG</button>
+
+          <button type="button" class="key key-func" data-insert="sin(">sin</button>
+          <button type="button" class="key key-func" data-insert="cos(">cos</button>
+          <button type="button" class="key key-func" data-insert="tan(">tan</button>
+          <button type="button" class="key key-func" data-insert="log(">log</button>
+          <button type="button" class="key key-func" data-insert="ln(">ln</button>
+
+          <button type="button" class="key key-func" data-insert="asin(">asin</button>
+          <button type="button" class="key key-func" data-insert="acos(">acos</button>
+          <button type="button" class="key key-func" data-insert="atan(">atan</button>
+          <button type="button" class="key key-func" data-insert="sqrt(">sqrt</button>
+          <button type="button" class="key key-func" data-insert="root(">root</button>
+
+          <button type="button" class="key key-func" data-insert="^">x^y</button>
+          <button type="button" class="key key-func" data-action="insert-square">x²</button>
+          <button type="button" class="key key-func" data-action="insert-cube">x³</button>
+          <button type="button" class="key key-func" data-insert="!">x!</button>
+          <button type="button" class="key key-func" data-action="insert-percent">%</button>
+
+          <button type="button" class="key key-func" data-insert="(">(</button>
+          <button type="button" class="key key-func" data-insert=")">)</button>
+          <button type="button" class="key key-func" data-insert=",">,</button>
+          <button type="button" class="key key-func" data-insert="pi">π</button>
+          <button type="button" class="key key-func" data-insert="e">e</button>
+
+          <button type="button" class="key" data-insert="7">7</button>
+          <button type="button" class="key" data-insert="8">8</button>
+          <button type="button" class="key" data-insert="9">9</button>
+          <button type="button" class="key key-op" data-insert="/">÷</button>
+          <button type="button" class="key key-op" data-action="toggle-sign">+/-</button>
+
+          <button type="button" class="key" data-insert="4">4</button>
+          <button type="button" class="key" data-insert="5">5</button>
+          <button type="button" class="key" data-insert="6">6</button>
+          <button type="button" class="key key-op" data-insert="*">×</button>
+          <button type="button" class="key key-op" data-insert="Ans">Ans</button>
+
+          <button type="button" class="key" data-insert="1">1</button>
+          <button type="button" class="key" data-insert="2">2</button>
+          <button type="button" class="key" data-insert="3">3</button>
+          <button type="button" class="key key-op" data-insert="-">−</button>
+          <button type="button" class="key key-op key-tall" data-action="evaluate">=</button>
+
+          <button type="button" class="key key-wide" data-insert="0">0</button>
+          <button type="button" class="key" data-insert=".">.</button>
+          <button type="button" class="key key-op" data-insert="+">+</button>
+        </section>
       </section>
-
-      <section class="keypad" aria-label="キー操作">
-        <button type="button" class="key key-muted" data-action="clear-all">AC</button>
-        <button type="button" class="key key-muted" data-action="backspace">BS</button>
-        <button type="button" class="key key-muted" data-action="delete">DEL</button>
-        <button type="button" class="key key-muted" data-action="move-left">◀</button>
-        <button type="button" class="key key-muted" data-action="move-right">▶</button>
-
-        <button type="button" class="key key-muted" data-action="memory-clear">MC</button>
-        <button type="button" class="key key-muted" data-action="memory-recall">MR</button>
-        <button type="button" class="key key-muted" data-action="memory-add">M+</button>
-        <button type="button" class="key key-muted" data-action="memory-subtract">M-</button>
-        <button type="button" class="key key-accent" data-action="toggle-angle">DEG</button>
-
-        <button type="button" class="key key-func" data-insert="sin(">sin</button>
-        <button type="button" class="key key-func" data-insert="cos(">cos</button>
-        <button type="button" class="key key-func" data-insert="tan(">tan</button>
-        <button type="button" class="key key-func" data-insert="log(">log</button>
-        <button type="button" class="key key-func" data-insert="ln(">ln</button>
-
-        <button type="button" class="key key-func" data-insert="asin(">asin</button>
-        <button type="button" class="key key-func" data-insert="acos(">acos</button>
-        <button type="button" class="key key-func" data-insert="atan(">atan</button>
-        <button type="button" class="key key-func" data-insert="sqrt(">sqrt</button>
-        <button type="button" class="key key-func" data-insert="root(">root</button>
-
-        <button type="button" class="key key-func" data-insert="^">x^y</button>
-        <button type="button" class="key key-func" data-action="insert-square">x²</button>
-        <button type="button" class="key key-func" data-action="insert-cube">x³</button>
-        <button type="button" class="key key-func" data-insert="!">x!</button>
-        <button type="button" class="key key-func" data-action="insert-percent">%</button>
-
-        <button type="button" class="key key-func" data-insert="(">(</button>
-        <button type="button" class="key key-func" data-insert=")">)</button>
-        <button type="button" class="key key-func" data-insert=",">,</button>
-        <button type="button" class="key key-func" data-insert="pi">π</button>
-        <button type="button" class="key key-func" data-insert="e">e</button>
-
-        <button type="button" class="key" data-insert="7">7</button>
-        <button type="button" class="key" data-insert="8">8</button>
-        <button type="button" class="key" data-insert="9">9</button>
-        <button type="button" class="key key-op" data-insert="/">÷</button>
-        <button type="button" class="key key-op" data-action="toggle-sign">+/-</button>
-
-        <button type="button" class="key" data-insert="4">4</button>
-        <button type="button" class="key" data-insert="5">5</button>
-        <button type="button" class="key" data-insert="6">6</button>
-        <button type="button" class="key key-op" data-insert="*">×</button>
-        <button type="button" class="key key-op" data-insert="Ans">Ans</button>
-
-        <button type="button" class="key" data-insert="1">1</button>
-        <button type="button" class="key" data-insert="2">2</button>
-        <button type="button" class="key" data-insert="3">3</button>
-        <button type="button" class="key key-op" data-insert="-">−</button>
-        <button type="button" class="key key-op key-tall" data-action="evaluate">=</button>
-
-        <button type="button" class="key key-wide" data-insert="0">0</button>
-        <button type="button" class="key" data-insert=".">.</button>
-        <button type="button" class="key key-op" data-insert="+">+</button>
-      </section>
-    </section>
+    </div>
   </main>
 
   <script src="app.js"></script>

@@ -484,10 +484,43 @@
     });
   }
 
+  function fitCalculatorToViewport(shell, fitWrapper, calculator) {
+    if (!shell || !fitWrapper || !calculator) {
+      return;
+    }
+
+    fitWrapper.style.setProperty("--fit-width", "auto");
+    fitWrapper.style.setProperty("--fit-height", "auto");
+    calculator.style.setProperty("--fit-scale", "1");
+
+    const shellStyle = window.getComputedStyle(shell);
+    const horizontalPadding =
+      Number.parseFloat(shellStyle.paddingLeft) + Number.parseFloat(shellStyle.paddingRight);
+    const verticalPadding =
+      Number.parseFloat(shellStyle.paddingTop) + Number.parseFloat(shellStyle.paddingBottom);
+
+    const availableWidth = Math.max(window.innerWidth - horizontalPadding, 0);
+    const availableHeight = Math.max(window.innerHeight - verticalPadding, 0);
+    const naturalWidth = calculator.offsetWidth;
+    const naturalHeight = calculator.offsetHeight;
+
+    if (!naturalWidth || !naturalHeight) {
+      return;
+    }
+
+    const scale = Math.min(availableWidth / naturalWidth, availableHeight / naturalHeight, 1);
+    fitWrapper.style.setProperty("--fit-width", `${naturalWidth * scale}px`);
+    fitWrapper.style.setProperty("--fit-height", `${naturalHeight * scale}px`);
+    calculator.style.setProperty("--fit-scale", String(scale));
+  }
+
   function initApp() {
     const input = document.getElementById("expression");
     const preview = document.getElementById("preview-message");
     const visual = document.getElementById("expression-visual");
+    const shell = document.querySelector(".app-shell");
+    const fitWrapper = document.getElementById("calculator-fit");
+    const calculator = document.querySelector(".calculator");
     const angleIndicator = document.getElementById("angle-mode");
     const memoryIndicator = document.getElementById("memory-indicator");
     const installButton = document.getElementById("install-button");
@@ -507,6 +540,7 @@
     updateMemoryIndicator(memoryIndicator);
     updatePreview(input, preview, visual);
     initInstallPrompt(installButton);
+    fitCalculatorToViewport(shell, fitWrapper, calculator);
 
     input.addEventListener("input", () => updatePreview(input, preview, visual));
     input.addEventListener("click", () => updateExpressionVisual(input, visual));
@@ -640,6 +674,10 @@
     });
 
     registerServiceWorker();
+    window.addEventListener("resize", () => fitCalculatorToViewport(shell, fitWrapper, calculator));
+    window.addEventListener("orientationchange", () =>
+      fitCalculatorToViewport(shell, fitWrapper, calculator)
+    );
   }
 
   if (typeof document !== "undefined") {

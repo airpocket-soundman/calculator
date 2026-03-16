@@ -42,6 +42,13 @@ button {
   overflow: hidden;
 }
 
+.calculator-fit {
+  width: var(--fit-width, auto);
+  height: var(--fit-height, auto);
+  display: grid;
+  place-items: center;
+}
+
 .calculator {
   width: min(95%, 494px);
   background: var(--panel);
@@ -50,6 +57,8 @@ button {
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
   padding: 20px 22px 18px;
+  transform: scale(var(--fit-scale, 1));
+  transform-origin: center center;
 }
 
 .topbar,
