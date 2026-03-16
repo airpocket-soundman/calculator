@@ -6,6 +6,7 @@
     memory: 0,
     ans: 0,
     deferredPrompt: null,
+    touchLikeDevice: false,
   };
 
   const operatorConfig = {
@@ -455,6 +456,15 @@
     const installButton = document.getElementById("install-button");
     const angleButton = document.querySelector('[data-action="toggle-angle"]');
     const keypad = document.querySelector(".keypad");
+    state.touchLikeDevice =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(pointer: coarse)").matches;
+
+    if (state.touchLikeDevice) {
+      input.readOnly = true;
+      input.setAttribute("inputmode", "none");
+    }
 
     updateAngleButton(angleButton, angleIndicator);
     updateMemoryIndicator(memoryIndicator);
