@@ -489,8 +489,6 @@
       return;
     }
 
-    fitWrapper.style.setProperty("--fit-width", "auto");
-    fitWrapper.style.setProperty("--fit-height", "auto");
     calculator.style.setProperty("--fit-scale", "1");
 
     const shellStyle = window.getComputedStyle(shell);
@@ -509,8 +507,6 @@
     }
 
     const scale = Math.min(availableWidth / naturalWidth, availableHeight / naturalHeight, 1);
-    fitWrapper.style.setProperty("--fit-width", `${naturalWidth * scale}px`);
-    fitWrapper.style.setProperty("--fit-height", `${naturalHeight * scale}px`);
     calculator.style.setProperty("--fit-scale", String(scale));
   }
 
