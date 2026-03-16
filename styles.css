@@ -1,0 +1,215 @@
+:root {
+  --bg: radial-gradient(circle at top, #2b5876 0%, #15304a 45%, #08121c 100%);
+  --panel: rgba(8, 18, 28, 0.72);
+  --panel-border: rgba(173, 216, 255, 0.18);
+  --text: #eef6ff;
+  --muted: #afc4d8;
+  --accent: #ffb347;
+  --accent-strong: #ff8c42;
+  --func: #1c3f5c;
+  --op: #244d6e;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --radius: 24px;
+  font-family: "Segoe UI", "Hiragino Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.calculator {
+  width: min(100%, 520px);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  padding: 24px;
+}
+
+.topbar,
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.9rem;
+}
+
+.install-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #1e1a14;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.display-panel {
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.chip-muted {
+  color: var(--muted);
+}
+
+.expression-input {
+  width: 100%;
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.25;
+  outline: none;
+}
+
+.preview {
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.preview[data-state="error"] {
+  color: #ff9b90;
+}
+
+.preview[data-state="ok"] {
+  color: #9fe7c8;
+}
+
+.keypad {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.key {
+  min-height: 58px;
+  border: 0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.key:hover,
+.key:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.key-muted {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.key-func {
+  background: var(--func);
+}
+
+.key-op {
+  background: var(--op);
+}
+
+.key-accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #1e1a14;
+  font-weight: 700;
+}
+
+.key-wide {
+  grid-column: span 2;
+}
+
+.key-tall {
+  grid-row: span 2;
+  min-height: 126px;
+  background: linear-gradient(180deg, #f6c65b, #f28c36);
+  color: #2c1700;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .calculator {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .keypad {
+    gap: 8px;
+  }
+
+  .key {
+    min-height: 52px;
+    border-radius: 16px;
+  }
+
+  .key-tall {
+    min-height: 112px;
+  }
+}
