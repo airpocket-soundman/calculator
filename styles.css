@@ -77,6 +77,20 @@ button {
   text-transform: uppercase;
 }
 
+.eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.version-tag {
+  margin-bottom: 4px;
+  color: rgba(238, 246, 255, 0.72);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
 h1 {
   margin: 0;
   font-size: 1.9rem;
