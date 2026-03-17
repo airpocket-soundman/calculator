@@ -189,6 +189,7 @@ Server running at http://localhost:8000
 ### 公開後の確認
 
 - 数分待ってから、GitHub Pages の公開 URL を開く
+- このリポジトリの公開 URL は `https://airpocket-soundman.github.io/calculator/`
 - 計算機の画面が正しく表示されることを確認する
 - 関数電卓機能が動作することを確認する
 - スマートフォン表示でもレイアウトが崩れていないことを確認する
